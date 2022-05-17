@@ -10,6 +10,7 @@ import cors from 'cors';
 
 //Route Imports
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}.`);
