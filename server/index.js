@@ -31,6 +31,8 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res) => res.send({ message: 'server is running' }));
+
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
