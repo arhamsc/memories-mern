@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import { useState } from 'react';
 import { createPost, updatePost } from '../../redux/actions/posts';
+import { useNavigate } from 'react-router-dom';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
@@ -16,9 +17,10 @@ const Form = ({ currentId, setCurrentId }) => {
     });
     const dispatch = useDispatch();
     const post = useSelector((state) =>
-        currentId ? state.posts.find((p) => p._id === currentId) : null,
+        currentId ? state.posts.posts.find((p) => p._id === currentId) : null,
     ); //returns 1 post
     const classes = useStyles();
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('profile'));
     useEffect(() => {
         if (post) {
@@ -47,7 +49,8 @@ const Form = ({ currentId, setCurrentId }) => {
                 }),
             );
         } else {
-            dispatch(createPost({ ...postData, name: user?.result?.name }));
+            dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
+        
         }
         clear();
     };
@@ -64,7 +67,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form
                 autoComplete="off"
                 noValidate
